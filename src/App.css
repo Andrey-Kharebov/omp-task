@@ -1,0 +1,26 @@
+.container {
+  display: flex; 
+  justify-content: space-between;
+  flex-wrap: wrap;
+  row-gap: 50px;
+}
+.container .card {
+  width: 230px;
+  height: 450px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.container .card .card-image {
+  height: 250px;
+}
+
+.container .card .card-image img {
+  height: 100%;
+}
+
+.container .card .card-action {
+  display: flex;
+  justify-content: space-between;
+}
