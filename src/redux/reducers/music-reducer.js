@@ -2,9 +2,11 @@ import { songsAPI } from '../../api/api';
 import pricing from '../../helpers/pricing';
 
 const SET_SONGS = 'SET-SONGS';
+const SET_SONGS_IS_READY = 'SET-SONGS-IS-READY';
 
 const initialState = {
-  songs: null
+  songs: null,
+  isReady: false
 }
 
 const songsReducer = (state = initialState, action) => {
@@ -14,17 +16,25 @@ const songsReducer = (state = initialState, action) => {
         ...state,
         songs: action.payload
       }
+    case SET_SONGS_IS_READY:
+      return {
+        ...state,
+        isReady: action.payload
+      }
     default:
       return state;
   }
 }
 
-const setSongs = (payload) => ({ type: SET_SONGS, payload })
+const setSongs = (payload) => ({ type: SET_SONGS, payload });
+const setSongsIsReady = (payload) => ({ type: SET_SONGS_IS_READY, payload });
 
 export const fetchSongs = () => (dispatch) => {
+  dispatch(setSongsIsReady(false));
   songsAPI.getSongsFromDB()
     .then(songs => {
       dispatch(setSongs(pricing(songs)));
+      dispatch(setSongsIsReady(true));
     })
 }
 

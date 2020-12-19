@@ -2,15 +2,24 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { fetchSongs } from '../../redux/reducers/music-reducer';
+import Loader from '../Loader/Loader';
 
 
-function Music({ songs, fetchSongs }) {
+function Music({ songs, isReady, fetchSongs }) {
 
   useEffect(() => {
     if (!songs) {
       fetchSongs();
     }
   }, [songs, fetchSongs])
+  
+  if (!isReady) {
+    return (
+      <div className='container'>
+        <Loader />
+      </div>
+    )
+  }
 
   return (
     <div className='container'>
@@ -40,7 +49,8 @@ function Music({ songs, fetchSongs }) {
 
 const mapStateToProps = (state) => {
   return {
-    songs: state.musicReducer.songs
+    songs: state.musicReducer.songs,
+    isReady: state.musicReducer.isReady
   }
 }
 export default connect(mapStateToProps, { fetchSongs })(Music);

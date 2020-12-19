@@ -2,31 +2,33 @@ import { connect } from 'react-redux';
 import React, { useEffect } from 'react';
 import { fetchBooks } from '../../redux/reducers/books-reducer';
 import { NavLink } from 'react-router-dom';
+import Loader from '../Loader/Loader';
 
 
-function Books({ books, fetchBooks }) {
+function Books({ isReady, books, fetchBooks }) {
 
   useEffect(() => {
     if (!books) {
       fetchBooks();
     }
   }, [books, fetchBooks])
+  
 
-  const imageSizeLarging = (imgUrl) => {
-    let sizeSmall = '-S';
-    let sizeLarge = '-L';
-    
-    return imgUrl.replace(sizeSmall, sizeLarge);
+  if (!isReady) {
+    return (
+      <div className='container'>
+        <Loader />
+      </div>
+    )
   }
 
   return (
-    <div>
-      <div className='container'>
+    <div className='container'>
       { books && books.map(book => {
         return (  
           <div className="card" key={ book.url } >
             <div className="card-image">
-              <img src={ imageSizeLarging(`http:${ book.picture.url }`)} alt='boolImg'></img>
+              <img src={ book.picture.url } alt='boolImg'></img>
               <span className='card-title' style={{ width: '100%', background: 'black', fontSize: '15px', opacity: '.7' }}>{ book.title }</span>
             </div>
             <div className="card-content">
@@ -40,14 +42,14 @@ function Books({ books, fetchBooks }) {
           </div>    
           )
         })}
-      </div>
     </div>
   )
 }
 
 const mapStateToProps = (state) => {
   return {
-    books: state.booksReducer.books
+    books: state.booksReducer.books,
+    isReady: state.booksReducer.isReady
   }
 }
 

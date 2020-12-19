@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { fetchMovies } from '../../redux/reducers/movies-reducer';
 import '../../App.css';
 import { NavLink } from 'react-router-dom';
+import Loader from '../Loader/Loader';
 
-function Movies({ movies, fetchMovies }) {
+function Movies({ movies, isReady, fetchMovies }) {
   useEffect(() => {
     if (!movies) {
       fetchMovies();
@@ -14,6 +15,14 @@ function Movies({ movies, fetchMovies }) {
   const movieShortOverview = (overview) => {
     const shortOverview = `${overview.split(' ').slice(0, 10).join(' ')} ...`;
     return shortOverview;
+  }
+
+  if (!isReady) {
+    return (
+      <div className='container'>
+        <Loader />
+      </div>
+    )
   }
 
   return (
@@ -44,7 +53,8 @@ function Movies({ movies, fetchMovies }) {
 
 const mapStateToProps = (state) => {
   return {
-    movies: state.moviesReducer.movies
+    movies: state.moviesReducer.movies,
+    isReady: state.moviesReducer.isReady
   }
 }
 

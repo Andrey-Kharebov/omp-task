@@ -1,10 +1,14 @@
 import { booksAPI } from '../../api/api';
+import imageSizeLarging from '../../helpers/imageSizeLarging';
 import pricing from '../../helpers/pricing';
 
 const SET_BOOKS = 'SET-BOOKS';
+const SET_BOOKS_IS_READY = 'SET-BOOKS-IS-READY';
+
 
 const initialState = {
-  books: null
+  books: null,
+  isReady: false
 }
 
 const booksReducer = (state = initialState, action) => {
@@ -14,18 +18,25 @@ const booksReducer = (state = initialState, action) => {
         ...state,
         books: action.payload
       }
+    case SET_BOOKS_IS_READY:
+      return {
+        ...state,
+        isReady: action.payload
+      }
     default:
       return state;
   }
 }
 
 const setBooks = (payload) => ({ type: SET_BOOKS, payload })
+const setBooksIsReady = (payload) => ({ type: SET_BOOKS_IS_READY, payload });
 
 export const fetchBooks = () => (dispatch) => {
-
+  dispatch(setBooksIsReady(false));
   booksAPI.getBooksListFromDB()
     .then(books => {
-      dispatch(setBooks(pricing(books)));
+      dispatch(setBooks(pricing(imageSizeLarging(books))));
+      dispatch(setBooksIsReady(true));
     })
 }
 

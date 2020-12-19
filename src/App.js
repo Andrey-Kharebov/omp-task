@@ -12,7 +12,7 @@ function App() {
     <div>
       <Navbar />
       <Switch>
-        <Route path='/' exact>Nothing interesting here.</Route>
+        <Route path='/' exact><h6>Nothing interesting on the main page. You're welcome to choose any category.</h6></Route>
         <Route path='/movies' exact><Movies /></Route>
         <Route path='/music' exact><Music /></Route>
         <Route path='/books' exact><Books /></Route>
