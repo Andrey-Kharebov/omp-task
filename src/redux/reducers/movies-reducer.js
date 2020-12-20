@@ -1,4 +1,6 @@
 import { moviesAPI } from '../../api/api';
+import addGenreToMovies from '../../helpers/genres/addGenreToMovies';
+import preparingMovies from '../../helpers/preparing/preparingMovies';
 import pricing from '../../helpers/pricing';
 
 const SET_MOVIES = 'SET-MOVIES';
@@ -33,7 +35,7 @@ export const fetchMovies = () => (dispatch) => {
   dispatch(setMoviesIsReady(false));
   moviesAPI.getMoviesListFromDB()
     .then(movies => {
-      dispatch(setMovies(pricing(movies)));
+      dispatch(setMovies(preparingMovies(addGenreToMovies(pricing(movies)))));
       dispatch(setMoviesIsReady(true));
     })
 }

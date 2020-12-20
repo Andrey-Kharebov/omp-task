@@ -1,4 +1,6 @@
 import { songsAPI } from '../../api/api';
+import addGenreToSongs from '../../helpers/genres/addGenreToSongs';
+import preparingSongs from '../../helpers/preparing/preparingSongs';
 import pricing from '../../helpers/pricing';
 
 const SET_SONGS = 'SET-SONGS';
@@ -33,7 +35,7 @@ export const fetchSongs = () => (dispatch) => {
   dispatch(setSongsIsReady(false));
   songsAPI.getSongsFromDB()
     .then(songs => {
-      dispatch(setSongs(pricing(songs)));
+      dispatch(setSongs(preparingSongs(addGenreToSongs(pricing(songs)))));
       dispatch(setSongsIsReady(true));
     })
 }

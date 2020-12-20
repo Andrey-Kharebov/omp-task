@@ -1,0 +1,37 @@
+.card {
+  width: 230px;
+  height: 450px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-image {
+  height: 250px;
+}
+
+.card-image img {
+  height: 100%;
+}
+
+.card-content .product-genre {
+  font-weight: 700;
+}
+
+.card-content .product-description {
+  margin-top: 10px !important;
+}
+
+
+.card-title { 
+  width: 100%;
+  background: black;
+  font-size: 15px !important;
+  opacity: .7;
+}
+
+
+.card-action {
+  display: flex;
+  justify-content: space-between;
+}

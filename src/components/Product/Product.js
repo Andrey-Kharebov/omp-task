@@ -1,14 +1,24 @@
 import React, { useEffect } from 'react';
+import './Product.css';
 import { connect } from 'react-redux';
-import { fetchProduct } from '../../redux/reducers/product-reducer';
+import { Redirect } from 'react-router-dom';
+import { fetchProduct, setProductsIsReady } from '../../redux/reducers/product-reducer';
 import Loader from '../Loader/Loader';
 
-function Product({ product, isReady, fetchProduct, categoryAndProductPath }) {
+function Product({ product, isReady, fetchProduct, categoryAndProductPath, clickedProduct, setProductsIsReady }) {
+  
   useEffect(() => {
-    fetchProduct(categoryAndProductPath);
-  }, [categoryAndProductPath, fetchProduct])
+    if (clickedProduct) {
+      setProductsIsReady(false);
+      fetchProduct(categoryAndProductPath, clickedProduct);
+    }
+  }, [categoryAndProductPath, clickedProduct, fetchProduct, setProductsIsReady])
 
-  if (!isReady) {
+
+
+  if (!clickedProduct && !product) {
+    return <Redirect to='/' />
+  } else if (!isReady) {
     return (
       <div className='container'>
         <Loader />
@@ -27,7 +37,7 @@ function Product({ product, isReady, fetchProduct, categoryAndProductPath }) {
               <h4>{ product.title }</h4>
               <p>{ product.description }</p>
               <div className='productActions'>
-                <button className='btn orange'>125 rub</button>
+                <button className='btn orange'>{ product.price } rub</button>
                 <button className='btn btn-primary'>Make An Order</button>
               </div>
             </div> 
@@ -45,4 +55,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { fetchProduct })(Product);
+export default connect(mapStateToProps, { fetchProduct, setProductsIsReady })(Product);

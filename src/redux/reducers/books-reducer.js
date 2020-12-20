@@ -1,5 +1,7 @@
 import { booksAPI } from '../../api/api';
+import addGenreToBooks from '../../helpers/genres/addGenreToBooks';
 import imageSizeLarging from '../../helpers/imageSizeLarging';
+import preparingBooks from '../../helpers/preparing/preparingBooks';
 import pricing from '../../helpers/pricing';
 
 const SET_BOOKS = 'SET-BOOKS';
@@ -35,7 +37,7 @@ export const fetchBooks = () => (dispatch) => {
   dispatch(setBooksIsReady(false));
   booksAPI.getBooksListFromDB()
     .then(books => {
-      dispatch(setBooks(pricing(imageSizeLarging(books))));
+      dispatch(setBooks(preparingBooks(addGenreToBooks(pricing(imageSizeLarging(books))))));
       dispatch(setBooksIsReady(true));
     })
 }

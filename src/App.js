@@ -17,10 +17,11 @@ function App() {
         <Route path='/music' exact><Music /></Route>
         <Route path='/books' exact><Books /></Route>
         
-        <Route path='/:category/:id' render={(props) => {
+        <Route path='/:category/:id' exact render={(props) => {
           const categoryAndProductPath = props.location.pathname;
+          const clickedProduct = props.location.clickedProduct;
           return (
-            <Product categoryAndProductPath={ categoryAndProductPath } />
+            <Product categoryAndProductPath={ categoryAndProductPath } clickedProduct={ clickedProduct } />
           )
         }} />        
       </Switch>

@@ -1,0 +1,30 @@
+.productSection {
+  margin-top: 40px;
+  display: flex;
+}
+
+.productSection .productImage {
+  width: 40%;
+  margin-right: 30px;
+}
+
+.productSection .productImage img {
+  border-radius: 20px;
+  width: 100%;
+  max-height: 591px;
+  height: 100%;
+}
+
+.productSection .productDescription {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.productSection .productDescription .productActions {
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
