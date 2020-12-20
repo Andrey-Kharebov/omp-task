@@ -6,7 +6,7 @@ import pricing from '../../helpers/pricing';
 
 const SET_BOOKS = 'SET-BOOKS';
 const SET_BOOKS_IS_READY = 'SET-BOOKS-IS-READY';
-
+const ADD_BOOKS_API_MESSAGE = 'ADD-BOOKS-API-MESSAGE';
 
 const initialState = {
   books: null,
@@ -25,6 +25,11 @@ const booksReducer = (state = initialState, action) => {
         ...state,
         isReady: action.payload
       }
+    case ADD_BOOKS_API_MESSAGE: 
+      return {
+        ...state, 
+        apiMessage: action.message
+      }
     default:
       return state;
   }
@@ -32,11 +37,19 @@ const booksReducer = (state = initialState, action) => {
 
 const setBooks = (payload) => ({ type: SET_BOOKS, payload })
 const setBooksIsReady = (payload) => ({ type: SET_BOOKS_IS_READY, payload });
+const addBooksApiMessage = (message) => ({ type: ADD_BOOKS_API_MESSAGE, message });
 
 export const fetchBooks = () => (dispatch) => {
   dispatch(setBooksIsReady(false));
+  dispatch(addBooksApiMessage(null));
+
   booksAPI.getBooksListFromDB()
-    .then(books => {
+    .then(response => {
+      if (response.data && response.data.error) {
+        return dispatch(addBooksApiMessage('Something went wrong. Please, try again later.'));
+      }
+
+      const books = response;
       dispatch(setBooks(preparingBooks(addGenreToBooks(pricing(imageSizeLarging(books))))));
       dispatch(setBooksIsReady(true));
     })

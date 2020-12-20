@@ -4,10 +4,14 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { fetchProduct, setProductsIsReady } from '../../redux/reducers/product-reducer';
 import Loader from '../Loader/Loader';
+import { useMessage } from '../../helpers/apiMessage';
 
-function Product({ product, isReady, fetchProduct, categoryAndProductPath, clickedProduct, setProductsIsReady }) {
-  
+function Product({ product, isReady, fetchProduct, categoryAndProductPath, clickedProduct, setProductsIsReady, apiMessage }) {
+  const message = useMessage();
+
   useEffect(() => {
+    apiMessage && message(apiMessage);
+
     if (clickedProduct) {
       setProductsIsReady(false);
       fetchProduct(categoryAndProductPath, clickedProduct);
@@ -21,7 +25,10 @@ function Product({ product, isReady, fetchProduct, categoryAndProductPath, click
   } else if (!isReady) {
     return (
       <div className='container'>
-        <Loader />
+        { apiMessage 
+        ? <h5>{ apiMessage }</h5> 
+        : <Loader />
+        }
       </div>
     )
   }
@@ -51,7 +58,8 @@ function Product({ product, isReady, fetchProduct, categoryAndProductPath, click
 const mapStateToProps = (state) => {
   return {
     product: state.productReducer.product,
-    isReady: state.productReducer.isReady
+    isReady: state.productReducer.isReady,
+    apiMessage: state.productReducer.apiMessage
   }
 }
 

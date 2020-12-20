@@ -13,7 +13,7 @@ const moviesInstance = Axios.create({
 const songsInstance = Axios.create({
   baseURL: 'https:api.spotify.com/v1',
   headers: {
-    'Authorization': `Bearer BQB5Be55HSs9DSoLYTkscTDjckJA9Qx9wiEmct_PK0S-mH4L0lahfqWcaSVUiulAaidRkbCpvH-hKIGuvG2kVmGWEdRVopDx8N9qVtOT5NHm7aMDfKmNYP0WscYtYR83NItUork6u9mVHFY2Mzk8QW9rOoUKqzY`
+    'Authorization': `Bearer BQDgPBNQ31lEg5wY11soBI_DPkEU2ibBWzm58GSUt7D2Sb12ptf9KyWLpOK00kEdtnG-sTuAasj1-bnAGLxNHoHzS4KQk3tLxaQwkEKQ1jstP-2bpxJMX_p6zmqDyHhK55Kg7szF3LqyuHC-XOdsybSrfNfYXLE`
   }
 });
 
@@ -24,6 +24,9 @@ export const booksAPI = {
         .then(response => {
           return response.data.entries;
         })
+        .catch(error => {
+          return error.response;
+        })
     )
   },
   getWorkFromDB(productId) {
@@ -32,6 +35,9 @@ export const booksAPI = {
         .then(response => {
           return response.data;
         })
+        .catch(error => {
+          return error.response;
+        })
     )
   },
   getBookFromDB(productId) {
@@ -39,6 +45,9 @@ export const booksAPI = {
       booksInstance.get(`/books/${ productId }.json`)
         .then(response => {
           return response.data;
+        })
+        .catch(error => {
+          return error.response;
         })
     )
   }
@@ -51,6 +60,9 @@ export const moviesAPI = {
         .then(response => {
           return response.data.items;
         })
+        .catch(error => {
+          return error.response;
+        })
     )
   },
   getMovieFromDB(productId) {
@@ -58,6 +70,9 @@ export const moviesAPI = {
       moviesInstance.get(`/movie/${ productId }?api_key=${ moviesApiKey }`)
         .then(response => {
           return response.data;
+        })
+        .catch(error => {
+          return error.response;
         })
     )
   }
@@ -69,6 +84,9 @@ export const songsAPI = {
         .then(response => {
           return response.data.albums.items;
         })
+        .catch(error => {
+          return error.response;
+        })
     )
   },
   getSongFromDB(productId) {
@@ -76,6 +94,9 @@ export const songsAPI = {
       songsInstance.get(`/albums/${ productId }`)
         .then(response => {
           return response.data;
+        })
+        .catch(error => {
+          return error.response;
         })
     )
   }

@@ -4,9 +4,14 @@ import { fetchMovies } from '../../redux/reducers/movies-reducer';
 import '../../App.css';
 import Loader from '../Loader/Loader';
 import ProductCard from '../ProductCard/ProductCard';
+import { useMessage } from '../../helpers/apiMessage';
 
-function Movies({ movies, isReady, fetchMovies }) {
+function Movies({ movies, isReady, fetchMovies, apiMessage }) {
+  const message = useMessage();
+
   useEffect(() => {
+    apiMessage && message(apiMessage);
+
     if (!movies) {
       fetchMovies();
     }
@@ -16,7 +21,10 @@ function Movies({ movies, isReady, fetchMovies }) {
   if (!isReady) {
     return (
       <div className='container'>
-        <Loader />
+        { apiMessage 
+        ? <h5>{ apiMessage }</h5> 
+        : <Loader />
+        }
       </div>
     )
   }
@@ -40,7 +48,8 @@ function Movies({ movies, isReady, fetchMovies }) {
 const mapStateToProps = (state) => {
   return {
     movies: state.moviesReducer.movies,
-    isReady: state.moviesReducer.isReady
+    isReady: state.moviesReducer.isReady,
+    apiMessage: state.moviesReducer.apiMessage
   }
 }
 

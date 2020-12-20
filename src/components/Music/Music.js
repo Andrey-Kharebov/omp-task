@@ -3,11 +3,15 @@ import { connect } from 'react-redux';
 import { fetchSongs } from '../../redux/reducers/music-reducer';
 import Loader from '../Loader/Loader';
 import ProductCard from '../ProductCard/ProductCard';
+import { useMessage } from '../../helpers/apiMessage';
 
 
-function Music({ songs, isReady, fetchSongs }) {
+function Music({ songs, isReady, fetchSongs, apiMessage }) {
+  const message = useMessage();
 
   useEffect(() => {
+      apiMessage && message(apiMessage);
+    
     if (!songs) {
       fetchSongs();
     }
@@ -16,7 +20,10 @@ function Music({ songs, isReady, fetchSongs }) {
   if (!isReady) {
     return (
       <div className='container'>
-        <Loader />
+        { apiMessage 
+        ? <h5>{ apiMessage }</h5> 
+        : <Loader />
+        }
       </div>
     )
   }
@@ -39,7 +46,8 @@ function Music({ songs, isReady, fetchSongs }) {
 const mapStateToProps = (state) => {
   return {
     songs: state.musicReducer.songs,
-    isReady: state.musicReducer.isReady
+    isReady: state.musicReducer.isReady,
+    apiMessage: state.musicReducer.apiMessage
   }
 }
 export default connect(mapStateToProps, { fetchSongs })(Music);
