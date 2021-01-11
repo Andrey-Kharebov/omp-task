@@ -13,7 +13,7 @@ const moviesInstance = Axios.create({
 const songsInstance = Axios.create({
   baseURL: 'https:api.spotify.com/v1',
   headers: {
-    'Authorization': `Bearer BQAO9HeQ_KmarANdZmS8vzKDj12XF_VsZKwoaWy9XPucyKS8gc-1wMGHYhn3fML-Ai2qKiwXuLwC_lXLtlj9WtPM1sfUmnra0AwS4hsDd-fID0EJdqKyzCVd7QZRuCiCNFaSWfzB6J_LDoBKowRBL5BRt81puhg`
+    'Authorization': `Bearer BQC_ik4ZEUjLPBPmqqRXpPSFbQ-xvX34JWQhP6CCVIpq26KOf23QmWbu5HRc4h_lIwk-ld0uN1-7704pOuQEhv98lvQfypr5GnQgxNX9vlm1kO3xbhnrvBic_1WbGO6sKSkoDoeW7BxHJi_8nDNdRW-AVWHO0cc`
   }
 });
 
